@@ -1,24 +1,3 @@
-/*import keythereum from 'keythereum';
-import eutil from 'ethereumjs-util';
-
-var datadir = "/Users/chafey/src/Prototype/ethereum/ethereum-private-network/.datadir";
-var keyObject = keythereum.importFromFile('0xf79e502ffdc85c91e643f61eebcadecadd7330e0', datadir);
-var privateKey = eutil.bufferToHex(keythereum.recover('changeme', keyObject));
-console.log('privateKey:', privateKey);
-console.log('publicKey:', eutil.bufferToHex(eutil.privateToPublic(privateKey)));
-
-export default {
-    address: '0xf79e502ffdc85c91e643f61eebcadecadd7330e0',
-    publicKey: eutil.bufferToHex(eutil.privateToPublic(privateKey)),
-    privateKey: privateKey,
-};*/
-
-/*
-export default {
-  address: '0xf79e502ffdc85c91e643f61eebcadecadd7330e0',
-  publicKey: '0x88035aa63f780a06b15916b12bfcf3fabeb9c2141e7953c0d3e80572dfcb3afbf19eca32d6ff9ae3b77778839046c7be42617361e423f4a53a0c1faa4c895602',
-  privateKey: '0x582cf76fcbeac1d78924bb568ebca253a9fe74f51349ee08c695b63249bd3b6b'
-}*/
 
 export default {
   address: '0x1e2bde1ea8884e04d2896b7182d6d6c564f1de4c',

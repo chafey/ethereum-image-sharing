@@ -14,12 +14,8 @@ function init(address) {
   } else {
     var txCount = web3.eth.getTransactionCount(address, 'pending');
     var nonce = Nonces.findOne({address:address});
-    if(nonce.nonce < txCount) {
-      console.log('Updating out of date nonce for', address, 'to', txCount);
-      Nonces.update({address:address}, {$set: {nonce : txCount}});
-    } else {
-      console.log('Nonce for', address, 'set to', nonce.nonce);
-    }
+    console.log('Setting nonce for', address, 'to', txCount);
+    Nonces.update({address:address}, {$set: {nonce : txCount}});
   }
 }
 

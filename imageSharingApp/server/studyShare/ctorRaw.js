@@ -6,6 +6,11 @@ import web3 from '../web3.js';
 import abiAndByteCode from './abiAndByteCode.js'
 import getNonce from '../getNonce.js';
 
+var StudyShare = web3.eth.contract(abiAndByteCode.abi);
+
+// Example of how to invoke methods with sendRawTransaction
+// https://github.com/ether-camp/wallet/blob/master/app/public/src/contracts/wallet.js
+// https://forum.ethereum.org/discussion/5039/how-to-use-web3-js-to-sign-a-contract-call
 export default function(recipient, url) {
   console.log('new StudyShare(', recipient, ',', url, ')');
   var args = [
@@ -37,25 +42,14 @@ export default function(recipient, url) {
   });
   tx.sign(Buffer.from(keyPair.privateKey.substr(2), 'hex'));
 
-  web3.eth.sendRawTransaction('0x' + tx.serialize().toString('hex'), function(err, hash) {
-    if (!err) {
-      console.log('transactionId:', hash);
-      //var tx = web3.eth.getTransaction(hash);
-      //console.log(tx);
-      var id = setInterval(function() {
-        console.log('getting transactionReceipt for ', hash);
-        var receipt = web3.eth.getTransactionReceipt(hash);
-        if(receipt !== null) {
-          console.log('contract address:', receipt.contractAddress);
-          //console.log(receipt);
-          clearInterval(id);
-        } else {
-          //console.log('null transaction');
-        }
-      }, 1000);
-
-    } else {
-      console.log('error:', err);
-    }
+  var p = new Promise((resolve, reject) => {
+    web3.eth.sendRawTransaction('0x' + tx.serialize().toString('hex'), function(err, transactionHash) {
+      if (!err) {
+        console.log('transactionId:', transactionHash);
+        resolve(transactionHash);
+      }
+    });
   });
+
+  return p;
 }

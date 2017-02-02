@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 
-import studyShare from './studyShare';
+import createStudyShare from './createStudyShare.js';
+
+import harvestTransactions from './harvestTransactions.js';
 
 /*
 import keythereum from 'keythereum';
@@ -22,6 +24,8 @@ console.log(pubKey.equals(eutil.privateToPublic(dk.privateKey)));
 */
 Meteor.startup(() => {
 
+  harvestTransactions.start();
+
   // code to run on server at startup
-  studyShare.new('0xf79e502ffdc85c91e643f61eebcadecadd7330e0', 'http://nucleushealth.io');
+  createStudyShare('0xf79e502ffdc85c91e643f61eebcadecadd7330e0', 'http://nucleushealth.io');
 });
