@@ -4,6 +4,10 @@ import createStudyShare from './createStudyShare.js';
 
 import harvestTransactions from './harvestTransactions.js';
 
+import keyPair from './keyPair.js';
+
+import getStudy from './getStudy.js';
+
 /*
 import keythereum from 'keythereum';
 import eutil from 'ethereumjs-util';
@@ -27,5 +31,10 @@ Meteor.startup(() => {
   harvestTransactions.start();
 
   // code to run on server at startup
-  createStudyShare('0xf79e502ffdc85c91e643f61eebcadecadd7330e0', 'http://nucleushealth.io');
+  if(StudyShares.find().count() === 0) {
+    createStudyShare(keyPair.address, 'http://localhost:3100/dicomweb/1.2.3.4.5');
+  } else {
+    getStudy("http://localhost:3100/dicomweb/1.2.3.4.5", keyPair);
+  }
+
 });

@@ -10,7 +10,7 @@ export default function(recipient, url) {
   //console.log('studyShareId =', studyShareId);
 
   // create blockchain contract
-  var p = studyShare.new('0xf79e502ffdc85c91e643f61eebcadecadd7330e0', 'http://nucleushealth.io');
+  var p = studyShare.new(recipient, url);
 
   // update record in db
   p.then((transactionHash) => {

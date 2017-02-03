@@ -6,12 +6,12 @@ function start() {
   console.log('harvestTransactions.start');
 
   intervalId = Meteor.setInterval(() => {
-    console.log('harvestTransactions - harvesting');
+    //console.log('harvestTransactions - harvesting');
     var studyShares = StudyShares.find({
       contractAddress : {$exists: false}
     });
     studyShares.forEach((studyShare) => {
-      console.log(studyShare);
+      console.log(studyShare._id);
       var transactionReceipt = web3.eth.getTransactionReceipt(studyShare.transactionHash);
       console.log(transactionReceipt);
       if(transactionReceipt !== null) {
