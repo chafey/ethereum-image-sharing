@@ -5,29 +5,26 @@ import keyPair from './keyPair.js';
 
 var StudyShare = web3.eth.contract(studyShare.abi);
 
-function toSignature(hexString) {
-  return {
-    r: Buffer.from(hexString.substr(2, 64), 'hex'),
-    s: Buffer.from(hexString.substr(66, 64), 'hex'),
-    v: parseInt(hexString.substr(130, 2), 16)
-  }
-}
-
 var rootUrl = "http://localhost:3100/dicomweb";
 
 WebApp.connectHandlers.use("/dicomweb", function(req, res, next) {
   //console.log('req:', req);
   //console.log('url:', req.url);
   //console.log('headers:', req.headers);
-  var signature = req.headers["x-signature"];
+  var r = req.headers["x-secp256k1-r"];
+  var s = req.headers["x-secp256k1-s"];
+  var v = req.headers["x-secp256k1-v"];
   var timeStamp = req.headers["x-timestamp"];
-  var resourceUrl = req.headers["x-resource-url"];
   var contractAddress = req.headers['x-contractaddress'];
 
-  var sig = toSignature(signature);
+  var sig = {
+    r : Buffer.from(r, 'hex'),
+    s : Buffer.from(s, 'hex'),
+    v : parseInt(v)
+  };
   //console.log(sig);
 
-  var hash = eutil.sha256(resourceUrl + ":" + timeStamp);
+  var hash = eutil.sha256(contractAddress + timeStamp);
 
   var pubKey = eutil.ecrecover(hash, sig.v, sig.r, sig.s);
 
